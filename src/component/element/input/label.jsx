@@ -4,7 +4,6 @@ const Label = (props) => {
       <label
         htmlFor={htmlFor}
         className="block text-slate-700 text-lg font-bold mb-2"
-        place
       >
         {childern}
       </label>

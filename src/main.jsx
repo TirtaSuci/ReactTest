@@ -17,7 +17,7 @@ ReactDOM.createRoot(root).render(
       <Route path="*" element={<PageError />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/product" element={<ProductPage/>} />
+      <Route path="/product" element={<ProductPage />} />
     </Routes>
   </BrowserRouter>
 );

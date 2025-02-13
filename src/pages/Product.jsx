@@ -7,10 +7,22 @@ import { data } from "react-router";
 
 const email = localStorage.getItem("email");
 
-const ProductPage = () => {
+const ProductPage = (props) => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([]);
+    const { Price, id } = props;
+    const [exchangeRate, setExchangeRate] = useState();
+
+    useEffect(() => {
+        fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
+            .then((res) => res.json())
+            .then((data) => {
+                const rate = data.rates.IDR;
+                setExchangeRate(rate);
+            })
+            .catch((error) => console.error("Error fetching exchange rate:", error));
+    }, []);
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem("cart")) || []);
@@ -54,7 +66,9 @@ const ProductPage = () => {
         localStorage.removeItem("email");
         localStorage.removeItem("password");
         window.location.href = "/login";
+
     };
+
     return (
         <Fragment>
             <div className="flex justify-end bg-blue-500 h-20 px-10 items-center text-white">{email}
@@ -87,29 +101,29 @@ const ProductPage = () => {
                                 return (
                                     <tr key={item.id}>
                                         <td>{product.title}</td>
-                                        <td>{product.price.toLocaleString("id-ID", {
-                                            style: "currency", currency: "IDR", minimumFractionDigits: 0,
+                                        <td className="text-right">{(product.price * exchangeRate).toLocaleString("id-ID", {
+                                            style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0
                                         })}</td>
-                                        <td>{item.qty}</td>
-                                        <td>{(product.price * item.qty).toLocaleString("id-ID", {
-                                            style: "currency", currency: "IDR", minimumFractionDigits: 0,
+                                        <td className="text-right">{item.qty}</td>
+                                        <td className="text-right">{((product.price * item.qty) * exchangeRate).toLocaleString("id-ID", {
+                                            style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0
                                         })}</td>
                                     </tr>
                                 )
                             })}
                             <tr>
                                 <td colSpan={3}><b>Price</b></td>
-                                <td><b>{totalPrice.toLocaleString("id-ID", {
-                                    style: "currency", currency: "IDR", minimumFractionDigits: 0,
+                                <td><b>{(totalPrice * exchangeRate).toLocaleString("id-ID", {
+                                    style: "currency", currency: "IDR", minimumFractionDigits: 0, maximumFractionDigits: 0
                                 })}</b></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div className="flex w-full justify-center">
+            {/* <div className="flex w-full justify-center">
                 <Counter></Counter>
-            </div>
+            </div> */}
         </Fragment>
     );
 };

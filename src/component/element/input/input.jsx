@@ -5,7 +5,7 @@ const InputForm = forwardRef((props, ref) => {
   return (
     <input
       type={type}
-      className="text-sm border rounded w-full py-2 px-3 text-slate-700 placeholde: opacity-50"
+      className="text-sm border rounded w-full border-gray-400 py-2 px-3 text-slate-700"
       placeholder={placeholder}
       name={name}
       id={name}
