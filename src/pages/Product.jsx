@@ -2,25 +2,35 @@ import React, { Fragment, useEffect, useState, useRef } from "react";
 import CardProduct from "../component/element/fragment/CardProduct";
 import Button from "../component/element/button";
 import Counter from "../component/element/fragment/Counter";
-
+import { getProducts } from "../services/products.service";
+import { data } from "react-router";
 
 const email = localStorage.getItem("email");
 
 const ProductPage = () => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const [products, setProducts] = useState([]);
+
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem("cart")) || []);
     }, []);
+
     useEffect(() => {
-        if (cart.length > 0) {
+        if (products.length > 0 && cart.length > 0) {
             localStorage.setItem("cart", JSON.stringify(cart));
             setTotalPrice(cart.reduce((total, item) => {
                 const product = products.find((Product) => Product.id === item.id);
                 return total + product.price * item.qty;
             }, 0));
         }
-    }, [cart]);
+    }, [cart, products]);
+
+    useEffect(() => {
+        getProducts((data) => {
+            setProducts(data);
+        });
+    }, []);
 
     const HandleAddToCart = (id) => {
         if (cart.find((item) => item.id === id)) {
@@ -38,9 +48,7 @@ const ProductPage = () => {
         }
     }
 
-    const cartRef = useRef([
-        { id: 1, qty: 1 }
-    ]);
+
 
     const HandleLogOut = () => {
         localStorage.removeItem("email");
@@ -54,10 +62,10 @@ const ProductPage = () => {
             </div>
             <div className="flex justify-center p-5">
                 <div className="flex w-4/6 flex-wrap">
-                    {products.map((Product) => (
+                    {products.length > 0 && products.map((Product) => (
                         <CardProduct bgColor={Product.bgColor} key={Product.id}>
                             <CardProduct.Header Image={Product.image}></CardProduct.Header>
-                            <CardProduct.Body ProductName={Product.name}>{Product.description}</CardProduct.Body>
+                            <CardProduct.Body ProductName={Product.title}>{Product.description}</CardProduct.Body>
                             <CardProduct.Footer Price={Product.price} id={Product.id} HandleAddToCart={HandleAddToCart}></CardProduct.Footer>
                         </CardProduct>
                     ))}
@@ -74,11 +82,11 @@ const ProductPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cartRef.current.map((item) => {
+                            {products.length > 0 && cart.map((item) => {
                                 const product = products.find((Product) => Product.id === item.id);
                                 return (
                                     <tr key={item.id}>
-                                        <td>{product.name}</td>
+                                        <td>{product.title}</td>
                                         <td>{product.price.toLocaleString("id-ID", {
                                             style: "currency", currency: "IDR", minimumFractionDigits: 0,
                                         })}</td>
@@ -89,12 +97,12 @@ const ProductPage = () => {
                                     </tr>
                                 )
                             })}
-                            {/* <tr>
+                            <tr>
                                 <td colSpan={3}><b>Price</b></td>
                                 <td><b>{totalPrice.toLocaleString("id-ID", {
                                     style: "currency", currency: "IDR", minimumFractionDigits: 0,
                                 })}</b></td>
-                            </tr> */}
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -106,30 +114,4 @@ const ProductPage = () => {
     );
 };
 
-const products = [
-    {
-        id: 1,
-        image: "/image/cat-1.jpg",
-        bgColor: "bg-orange-300",
-        name: "Kucing Belang",
-        price: 1000000,
-        description: "Kucing belang adalah kucing yang memiliki pola warna bulu yang bercorak atau bergaris, biasanya terdiri dari kombinasi dua atau tiga warna seperti hitam, putih, abu-abu, cokelat, atau oranye.",
-    },
-    {
-        id: 2,
-        image: "/image/cat-2.jpg",
-        bgColor: "bg-slate-300",
-        name: "Kucing Abu-abu",
-        price: 2000000,
-        description: "Kucing abu-abu biasanya punya bulu yang cantik dan elegan! Apa kamu punya kucing abu-abu sendiri atau suka dengan ras tertentu, seperti Russian Blue atau British Shorthair.",
-    },
-    {
-        id: 3,
-        image: "/image/cat-3.jpg",
-        bgColor: "bg-orange-300",
-        name: "Kucing Oyen",
-        price: 3000000,
-        description: "Kucing oyen adalah sebutan untuk kucing berwarna oranye (ginger cat). Di Indonesia, mereka sering kali punya reputasi lucu sebagai kucing paling nakal dan bandel 😹.",
-    },
-]
 export default ProductPage;

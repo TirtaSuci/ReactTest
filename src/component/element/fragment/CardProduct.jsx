@@ -5,7 +5,7 @@ import Button from "../button"
 const CardProduct = (props) => {
     const { children, bgColor } = props
     return (
-        <div className={`w-full max-w-xs ${bgColor} border border-gray-600  rounded-xl drop-shadow-lg m-2 flex flex-col justify-between`}>
+        <div className={`w-full max-w-xs ${bgColor} border border-gray-600 rounded-xl m-2 flex flex-col justify-between`}>
             {children}
         </div>
     )
@@ -14,12 +14,12 @@ const CardProduct = (props) => {
 const Header = (props) => {
     const { Image } = props
     return (
-        <div className="p-3">
-            <a href="">
+        <div className="p-3 bg-gray-200 rounded-t-xl">
+            <a href="" className="justify-center flex">
                 <img
                     src={Image}
                     alt="Product"
-                    className="rounded-xl overflow-hidden object-cover h-50"
+                    className="bg-auto bg h-50"
                 />
             </a>
         </div>
@@ -29,10 +29,10 @@ const Header = (props) => {
 const Body = (props) => {
     const { ProductName, children } = props
     return (
-        <div className="px-3 text-gray-700 pb-3 h-full">
+        <div className="px-3 text-gray-700 pb-3 pt-3 h-full">
             <a href="">
-                <h1 className="font-semibold text-xl tracking-tight">{ProductName}</h1>
-                <p className="tracking-tighter text-s">{children}</p>
+                <h1 className="font-semibold text-xl tracking-tight">{ProductName.substring(0, 20)}...</h1>
+                <p className="tracking-tighter text-s">{children.substring(0, 100)}...</p>
             </a>
         </div>
     )
