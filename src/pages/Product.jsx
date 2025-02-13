@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, useRef } from "react";
 import CardProduct from "../component/element/fragment/CardProduct";
 import Button from "../component/element/button";
 import Counter from "../component/element/fragment/Counter";
@@ -21,7 +21,7 @@ const ProductPage = () => {
             }, 0));
         }
     }, [cart]);
-    
+
     const HandleAddToCart = (id) => {
         if (cart.find((item) => item.id === id)) {
             setCart(cart.map((item) => {
@@ -37,6 +37,11 @@ const ProductPage = () => {
             setCart([...cart, { id: id, qty: 1 }]);
         }
     }
+
+    const cartRef = useRef([
+        { id: 1, qty: 1 }
+    ]);
+
     const HandleLogOut = () => {
         localStorage.removeItem("email");
         localStorage.removeItem("password");
@@ -69,7 +74,7 @@ const ProductPage = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {cart.map((item) => {
+                            {cartRef.current.map((item) => {
                                 const product = products.find((Product) => Product.id === item.id);
                                 return (
                                     <tr key={item.id}>
@@ -84,12 +89,12 @@ const ProductPage = () => {
                                     </tr>
                                 )
                             })}
-                            <tr>
+                            {/* <tr>
                                 <td colSpan={3}><b>Price</b></td>
                                 <td><b>{totalPrice.toLocaleString("id-ID", {
                                     style: "currency", currency: "IDR", minimumFractionDigits: 0,
                                 })}</b></td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                 </div>

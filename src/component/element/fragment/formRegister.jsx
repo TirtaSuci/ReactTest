@@ -1,16 +1,22 @@
 import Index from "../input";
 import Button from "../button";
+import { useEffect, useRef } from "react";
 
 const FormRegister = () => {
   const HandleRegister = () => {
     console.log("Register");
   };
+  const fullName = useRef(null);
+  useEffect(() => {
+    fullName.current.focus();
+  });
   return (
     <form action="">
       <Index
         childern="Fullname"
         type="text"
         placeholder="insert your name here"
+        ref={fullName}
       ></Index>
       <Index
         childern="Email"

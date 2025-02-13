@@ -1,5 +1,6 @@
 import Index from "../input";
 import Button from "../button";
+import { useEffect, useRef } from "react";
 
 const FormLogin = () => {
   const HandleLogin = (event) => {
@@ -8,6 +9,10 @@ const FormLogin = () => {
     localStorage.setItem("password", event.target.password.value);
     window.location.href = "/product";
   };
+  const emailRef = useRef(null);
+  useEffect(() => {
+    emailRef.current.focus();
+  })
   return (
     <form onSubmit={HandleLogin}>
       <Index
@@ -15,6 +20,7 @@ const FormLogin = () => {
         type="email"
         placeholder="example@mail.com"
         name="email"
+        ref={emailRef}
       ></Index>
       <Index
         childern="Password"
