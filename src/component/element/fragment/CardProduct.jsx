@@ -19,7 +19,7 @@ const Header = (props) => {
                 <img
                     src={Image}
                     alt="Product"
-                    className="bg-auto bg h-50"
+                    className="bg-auto h-50"
                 />
             </Link>
         </div>
