@@ -7,6 +7,8 @@ import Register from "./pages/Register.jsx";
 import PageError from "./pages/404.jsx";
 import Home from "./pages/Home.jsx";
 import ProductPage from "./pages/Product.jsx";
+import ProfilePage from "./pages/Profile.jsx";
+import DetailProductPage from "./pages/DetailProduct.jsx";
 
 const root = document.getElementById("root");
 
@@ -17,7 +19,9 @@ ReactDOM.createRoot(root).render(
       <Route path="*" element={<PageError />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/product" element={<ProductPage />} />
+      <Route path="/products" element={<ProductPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/product/:id" element={<DetailProductPage />} />
     </Routes>
   </BrowserRouter>
 );

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "../button";
+import { Link } from "react-router-dom";
 
 const CardProduct = (props) => {
     const { children, bgColor } = props;
@@ -11,16 +12,16 @@ const CardProduct = (props) => {
 };
 
 const Header = (props) => {
-    const { Image } = props;
+    const { Image, id } = props;
     return (
         <div className="p-3 bg-gray-200 rounded-t-xl">
-            <a href="" className="justify-center flex">
+            <Link to={`/product/${id}`} className="justify-center flex">
                 <img
                     src={Image}
                     alt="Product"
                     className="bg-auto bg h-50"
                 />
-            </a>
+            </Link>
         </div>
     );
 };

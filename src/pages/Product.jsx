@@ -5,14 +5,14 @@ import Counter from "../component/element/fragment/Counter";
 import { getProducts } from "../services/products.service";
 import { data } from "react-router";
 import { getUsername } from "../services/auth.service";
+import { useLogin } from "../hooks/useLogin";
 
 const ProductPage = (props) => {
     const [cart, setCart] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState([]);
-    const { Price, id } = props;
     const [exchangeRate, setExchangeRate] = useState();
-    const [username, setUsername] = useState("");
+    const username = useLogin();
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -26,13 +26,6 @@ const ProductPage = (props) => {
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem("cart")) || []);
-    }, []);
-
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-        if (token) {
-            setUsername(getUsername(token));
-        } else window.location.href = "/login";
     }, []);
 
     useEffect(() => {
@@ -82,7 +75,7 @@ const ProductPage = (props) => {
                 <div className="flex w-4/6 flex-wrap">
                     {products.length > 0 && products.map((Product) => (
                         <CardProduct bgColor={Product.bgColor} key={Product.id}>
-                            <CardProduct.Header Image={Product.image}></CardProduct.Header>
+                            <CardProduct.Header Image={Product.image} id={Product.id}></CardProduct.Header>
                             <CardProduct.Body ProductName={Product.title}>{Product.description}</CardProduct.Body>
                             <CardProduct.Footer Price={Product.price} id={Product.id} HandleAddToCart={HandleAddToCart}></CardProduct.Footer>
                         </CardProduct>
