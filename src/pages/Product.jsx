@@ -4,8 +4,7 @@ import Button from "../component/element/button";
 import Counter from "../component/element/fragment/Counter";
 import { getProducts } from "../services/products.service";
 import { data } from "react-router";
-
-const email = localStorage.getItem("email");
+import { getUsername } from "../services/auth.service";
 
 const ProductPage = (props) => {
     const [cart, setCart] = useState([]);
@@ -13,6 +12,7 @@ const ProductPage = (props) => {
     const [products, setProducts] = useState([]);
     const { Price, id } = props;
     const [exchangeRate, setExchangeRate] = useState();
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -26,6 +26,13 @@ const ProductPage = (props) => {
 
     useEffect(() => {
         setCart(JSON.parse(localStorage.getItem("cart")) || []);
+    }, []);
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            setUsername(getUsername(token));
+        } else window.location.href = "/login";
     }, []);
 
     useEffect(() => {
@@ -60,18 +67,15 @@ const ProductPage = (props) => {
         }
     }
 
-
-
     const HandleLogOut = () => {
-        localStorage.removeItem("email");
-        localStorage.removeItem("password");
+        localStorage.removeItem("token");
         window.location.href = "/login";
 
     };
 
     return (
         <Fragment>
-            <div className="flex justify-end bg-blue-500 h-20 px-10 items-center text-white">{email}
+            <div className="flex justify-end bg-blue-500 h-20 px-10 items-center text-white">{username}
                 <Button bgcolor="bg-red-400 ml-5" onClick={HandleLogOut}>Logout</Button>
             </div>
             <div className="flex justify-center p-5">
