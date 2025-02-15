@@ -3,16 +3,16 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        data: [
-            {
-                data: 1, qty: 1
-            }
-        ],
-
+        data: JSON.parse(localStorage.getItem("cart")) || [],
     },
     reducers: {
         addToCart: (state, action) => {
-            state.data.push(action.payload);
+            const itemInCart = state.data.find((item) => item.id === action.payload.id);
+            if (itemInCart) {
+                itemInCart.qty += 1;
+            } else (
+                state.data.push(action.payload)
+            )
         }
     }
 });

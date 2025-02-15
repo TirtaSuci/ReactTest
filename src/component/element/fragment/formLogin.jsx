@@ -42,7 +42,7 @@ const FormLogin = () => {
         placeholder="******"
         name="password"
       ></Index>
-      <Button bgcolor="bg-blue-400 w-full" type="submit">login</Button>
+      <Button className="bg-blue-500 w-full text-white" type="submit">login</Button>
     </form>
   );
 };

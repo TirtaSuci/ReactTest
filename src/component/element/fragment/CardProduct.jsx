@@ -41,7 +41,7 @@ const Body = (props) => {
 };
 
 const Footer = (props) => {
-    const { Price, HandleAddToCart, id } = props;
+    const { Price, id } = props;
     const [exchangeRate, setExchangeRate] = useState(1);
     const [convertedPrice, setConvertedPrice] = useState(Price);
     const usedispatch = useDispatch();

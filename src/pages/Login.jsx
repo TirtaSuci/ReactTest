@@ -6,6 +6,8 @@ const Login = () => {
   return (
     <AuthLayout Text="Login" type="Login">
       <FormLogin />
+      <p>username: johnd</p>
+      <p>password: m38rmF$</p>
     </AuthLayout>
   );
 };
