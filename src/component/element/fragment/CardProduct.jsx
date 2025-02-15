@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Button from "../button";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "/src/redux/slice/cartSlice";
 
 const CardProduct = (props) => {
     const { children, bgColor } = props;
@@ -42,6 +44,7 @@ const Footer = (props) => {
     const { Price, HandleAddToCart, id } = props;
     const [exchangeRate, setExchangeRate] = useState(1);
     const [convertedPrice, setConvertedPrice] = useState(Price);
+    const usedispatch = useDispatch();
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -62,7 +65,7 @@ const Footer = (props) => {
                     maximumFractionDigits: 0
                 })}
             </span>
-            <Button bgcolor="bg-blue-600" onClick={() => HandleAddToCart(id)} >Add to Cart</Button>
+            <Button className="bg-blue-600 text-white" onClick={() => usedispatch(addToCart({ id, qty: 1 }))} >Add to Cart</Button>
         </div>
     );
 };
