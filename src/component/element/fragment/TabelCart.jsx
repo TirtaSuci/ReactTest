@@ -1,5 +1,7 @@
+import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { DarkMode } from "../../context/DarkMode";
 
 const TabelCart = (props) => {
     const { products } = props;
@@ -7,6 +9,7 @@ const TabelCart = (props) => {
     const [totalPrice, setTotalPrice] = useState(0);
     const [exchangeRate, setExchangeRate] = useState(1); // Default to 1 to avoid undefined
     const totalPriceRef = useRef(null);
+    const { isDarkMode} = useContext(DarkMode);
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -37,7 +40,7 @@ const TabelCart = (props) => {
     }, [cart]);
 
     return (
-        <table className="table-auto text-left border-separate border-spacing-x-5 -ml-5">
+        <table className={`table-auto text-left border-separate border-spacing-x-5 -ml-5 ${isDarkMode && "text-white"}`}>
             <thead>
                 <tr>
                     <th className="pr-15">Product</th>

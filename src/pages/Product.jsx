@@ -3,10 +3,13 @@ import CardProduct from "../component/element/fragment/CardProduct";
 import { getProducts } from "../services/products.service";
 import TabelCart from "../component/element/fragment/TabelCart";
 import Navbar from "../layout/Navbar";
+import { DarkMode } from "../component/context/DarkMode";
+import { useContext } from "react";
 
 const ProductPage = () => {
     const [products, setProducts] = useState([]);
     const [exchangeRate, setExchangeRate] = useState();
+    const { isDarkMode, setIsDarkMode } = useContext(DarkMode);
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -26,7 +29,8 @@ const ProductPage = () => {
 
     return (
         <Fragment>
-            <div className="flex justify-center p-5">
+            <Navbar />
+            <div className={`flex justify-center p-5 ${isDarkMode && "bg-slate-800"}`}>
                 <div className="flex w-4/6 flex-wrap">
                     {products.length > 0 && products.map((Product) => (
                         <CardProduct bgColor={Product.bgColor} key={Product.id}>

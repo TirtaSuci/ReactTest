@@ -3,6 +3,8 @@ import Button from "../button";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addToCart } from "/src/redux/slice/cartSlice";
+import { useContext } from "react";
+import { DarkMode } from "../../context/DarkMode";
 
 const CardProduct = (props) => {
     const { children, bgColor } = props;
@@ -30,11 +32,12 @@ const Header = (props) => {
 
 const Body = (props) => {
     const { ProductName, children } = props;
+    const { isDarkMode } = useContext(DarkMode);
     return (
         <div className="px-3 text-gray-700 pb-3 pt-3 h-full">
             <a href="">
-                <h1 className="font-semibold text-xl tracking-tight">{ProductName.substring(0, 20)}...</h1>
-                <p className="tracking-tighter text-s">{children.substring(0, 100)}...</p>
+                <h1 className={`font-semibold text-xl tracking-tight ${isDarkMode && "text-white"}`}>{ProductName.substring(0, 20)}...</h1>
+                <p className={`tracking-tighter text-s ${isDarkMode && "text-white"}`}>{children.substring(0, 100)}...</p>
             </a>
         </div>
     );
@@ -45,6 +48,7 @@ const Footer = (props) => {
     const [exchangeRate, setExchangeRate] = useState(1);
     const [convertedPrice, setConvertedPrice] = useState(Price);
     const usedispatch = useDispatch();
+    const { isDarkMode } = useContext(DarkMode);
 
     useEffect(() => {
         fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
@@ -59,13 +63,13 @@ const Footer = (props) => {
 
     return (
         <div className="flex items-center justify-between px-3 pb-5">
-            <span className="font-bold text-xl text-gray-700">
+            <span className={`font-bold text-xl text-gray-700 ${isDarkMode && "text-white"}`}>
                 {convertedPrice.toLocaleString("id-ID", {
                     style: "currency", currency: "IDR", minimumFractionDigits: 0,
                     maximumFractionDigits: 0
                 })}
             </span>
-            <Button className="bg-blue-600 text-white" onClick={() => usedispatch(addToCart({ id, qty: 1 }))} >Add to Cart</Button>
+            <Button className={`bg-blue-600 text-white`} onClick={() => usedispatch(addToCart({ id, qty: 1 }))} >Add to Cart</Button>
         </div>
     );
 };
