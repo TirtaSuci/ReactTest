@@ -1,4 +1,4 @@
-const DecreaseButton = (props) => {
+const RemoveProductButton = (props) => {
     const { children,type ="button",className, onClick = () => { } } = props;
     return (
       <button
@@ -11,5 +11,4 @@ const DecreaseButton = (props) => {
     );
   };
   
-  export default DecreaseButton;
-  
+  export default RemoveProductButton;

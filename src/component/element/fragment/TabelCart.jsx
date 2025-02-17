@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
 import { useTotalPrice, useTotalPriceDispatch } from "../../context/TotalPriceContext";
 import { useExchangeRate } from "../../context/ExchangeMoney"
-import { addToCart, decreaseCart } from "../../../redux/slice/cartSlice";
-import DecreaseButton from "../button/DecreaseButton";
+import { addToCart, decreaseCart, removeFromCart } from "../../../redux/slice/cartSlice";
+import RemoveProductButton from "../button/RemoveProductButton";
 
 const TabelCart = (props) => {
-    const { products, id } = props;
+    const { products, id} = props;
     const { isDarkMode } = useContext(DarkMode);
     const { total } = useTotalPrice();
     const cart = useSelector((state) => state.cart.data);
@@ -79,9 +79,9 @@ const TabelCart = (props) => {
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
                                             <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border border-gray-300 flex justify-center items-center ">
-                                                <button onClick={() => usedispatch(addToCart({ id, qty: 1 }))} className="w-7"> - </button>
+                                            <button onClick={() => usedispatch(decreaseCart({ id: item.id, qty: 1 }))} className="w-7"> - </button>
                                                 <span className="px-5">{item.qty}</span>
-                                                <button onClick={() => usedispatch(decreaseCart({ id, qty: 1 }))} className="w-7"> + </button>
+                                                <button onClick={() => usedispatch(addToCart({ id: item.id, qty: 1 }))} className="w-7"> + </button>
                                             </div>
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
@@ -92,7 +92,7 @@ const TabelCart = (props) => {
                                                 maximumFractionDigits: 0,
                                             })}
                                         </div>
-                                        <DecreaseButton></DecreaseButton>
+                                        <RemoveProductButton className="bg-blue-600 text-white" onClick={() => usedispatch(removeFromCart({ id: item.id}))}>Hapus</RemoveProductButton>
                                     </div>
                                 ) : null;
                             })}
