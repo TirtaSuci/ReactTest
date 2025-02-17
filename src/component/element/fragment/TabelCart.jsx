@@ -3,26 +3,17 @@ import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
 import { useTotalPrice, useTotalPriceDispatch } from "../../context/TotalPriceContext";
+import { useExchangeRate } from "../../context/ExchangeMoney"
 
 const TabelCart = (props) => {
     const { products } = props;
     const cart = useSelector((state) => state.cart.data);
-    const [exchangeRate, setExchangeRate] = useState(1); // Default to 1 to avoid undefined
     const totalPriceRef = useRef(null);
     const infoCartRef = useRef(null);
     const { isDarkMode } = useContext(DarkMode);
     const dispatch = useTotalPriceDispatch();
     const { total } = useTotalPrice();
-
-    useEffect(() => {
-        fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
-            .then((res) => res.json())
-            .then((data) => {
-                const rate = data.rates.IDR;
-                setExchangeRate(rate);
-            })
-            .catch((error) => console.error("Error fetching exchange rate:", error));
-    }, []);
+    const exchangeRate = useExchangeRate();
 
     useEffect(() => {
         if (products.length > 0 && cart.length > 0) {
@@ -52,55 +43,61 @@ const TabelCart = (props) => {
 
 
     return (
-        <div>
+        <div className="flex w-full justify-center">
             <div ref={infoCartRef} >
                 <h1>Anda Belum Menambakan Produk Apapun</h1>
             </div>
             <div ref={totalPriceRef} >
-                <table className={`table-auto text-left border-separate border-spacing-x-5 -ml-5 ${isDarkMode && "text-white"}`}>
-                    {/* <thead>
-                        <tr>
-                            <th className="pr-15">Product</th>
-                            <th>Price</th>
-                            <th>Qty</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead> */}
-                    <tbody>
+                <div className={` ${isDarkMode && "text-white"}`}>
+                    <div className="">
                         {products.length > 0 &&
                             cart.map((item) => {
                                 const product = products.find((Product) => Product.id === item.id);
                                 const productExchange = product.price * exchangeRate;
                                 return product ? (
-                                    <tr key={item.id} className="border">
-                                        <td >{product.title}</td>
-                                        <td className="text-right">
-                                            {(productExchange).toLocaleString("id-ID", {
-                                                style: "currency",
-                                                currency: "IDR",
-                                                minimumFractionDigits: 0,
-                                                maximumFractionDigits: 0,
-                                            })}
-                                        </td>
-                                        <div className="flex border rounded rounded-full p-1">
-                                            <button className="px-4"> - </button>
-                                            <td className="text-right">{item.qty}</td>
-                                            <button className="px-4"> + </button>
+                                    <div key={item.id} className="border w-5xl mb-2 flex justify-center items-center text-s tracking-tight">
+                                        <div className="w-20 h-20 border border-gray-300 flex- items-center justify-center m-3">
+                                            <img className="w-full h-full object-contain" src={product.image} alt={product.title} />
                                         </div>
-                                        <td className="text-right">
-                                            {((productExchange * item.qty)).toLocaleString("id-ID", {
+                                        <div className="w-40 overflow-hidden text-ellipsis whitespace-normal" style={{
+                                            display: "-webkit-box",
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical"
+                                        }}>
+                                            {product.title}
+                                        </div>
+                                        <div className="w-50 flex justify-center items-center">
+                                            {productExchange.toLocaleString("id-ID", {
                                                 style: "currency",
                                                 currency: "IDR",
                                                 minimumFractionDigits: 0,
                                                 maximumFractionDigits: 0,
                                             })}
-                                        </td>
-                                    </tr>
+                                        </div>
+                                        <div className="w-50 flex justify-center items-center">
+                                            <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border border-gray-300 flex justify-center items-center ">
+                                                <button className="w-7"> - </button>
+                                                <span className="px-5">{item.qty}</span>
+                                                <button className="w-7"> + </button>
+                                            </div>
+                                        </div>
+                                        <div className="w-50 flex justify-center items-center">
+                                            {(productExchange * item.qty).toLocaleString("id-ID", {
+                                                style: "currency",
+                                                currency: "IDR",
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0,
+                                            })}
+                                        </div>
+                                        <div className="w-50 flex justify-center items-center">
+                                            <button className="border bg-blue-600 text-white p-2 px-5 rounded-lg">Hapus</button>
+                                        </div>
+                                    </div>
                                 ) : null;
                             })}
-                        <tr >
-                            <td colSpan={3}><b>Total Price</b></td>
-                            <td>
+                        {/* <div>
+                            <div colSpan={3}><b>Total Price</b></div>
+                            <div>
                                 <b>
                                     {(total * exchangeRate).toLocaleString("id-ID", {
                                         style: "currency",
@@ -109,10 +106,10 @@ const TabelCart = (props) => {
                                         maximumFractionDigits: 0,
                                     })}
                                 </b>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                        </div> */}
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider } from "react-router";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import PageError from "./pages/404.jsx";
@@ -11,9 +11,10 @@ import ProfilePage from "./pages/Profile.jsx";
 import DetailProductPage from "./pages/DetailProduct.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
-import Navbar from "./layout/Navbar.jsx";
 import DarkModeContextProvider from "./component/context/DarkMode.jsx";
 import { TotalPriceProvider } from "./component/context/TotalPriceContext.jsx";
+import CartProductPage from "./pages/CartProduct.jsx";
+import { ExchangeRateProvider } from "./component/context/ExchangeMoney.jsx";
 
 const root = document.getElementById("root");
 
@@ -35,6 +36,9 @@ const router = createBrowserRouter([
   },
   {
     path: "/product/:id", element: <DetailProductPage />
+  },
+  {
+    path: "/cartproduct", element: <CartProductPage />
   }
 ])
 
@@ -42,9 +46,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <DarkModeContextProvider>
-        <TotalPriceProvider>
-          <RouterProvider router={router} ></RouterProvider>
-        </TotalPriceProvider>
+        <ExchangeRateProvider>
+          <TotalPriceProvider>
+            <RouterProvider router={router} ></RouterProvider>
+          </TotalPriceProvider>
+        </ExchangeRateProvider>
       </DarkModeContextProvider>
     </Provider>
   </React.StrictMode>

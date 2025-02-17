@@ -30,8 +30,8 @@ const ProductPage = () => {
     return (
         <Fragment>
             <Navbar />
-            <div className={`flex justify-center p-5 ${isDarkMode && "bg-slate-800"}`}>
-                <div className="flex w-1/2 flex-wrap">
+            <div className={`${isDarkMode && "bg-slate-800"}`}>
+                <div className="min-w-screen flex flex-wrap justify-center items-center">
                     {products.length > 0 && products.map((Product) => (
                         <CardProduct bgColor={Product.bgColor} key={Product.id}>
                             <CardProduct.Header Image={Product.image} id={Product.id}></CardProduct.Header>
@@ -40,10 +40,10 @@ const ProductPage = () => {
                         </CardProduct>
                     ))}
                 </div>
-                <div className="w-1/2">
+                {/* <div className="w-1/2">
                     <h1 className="text-3xl font-bold text-blue-600">Cart</h1>
                     <TabelCart products={products} exchangeRate={exchangeRate}></TabelCart>
-                </div>
+                </div> */}
             </div>
             {/* <div className="flex w-full justify-center">
                 <Counter></Counter>
