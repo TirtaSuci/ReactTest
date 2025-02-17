@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import Navbar from "./layout/Navbar.jsx";
 import DarkModeContextProvider from "./component/context/DarkMode.jsx";
+import { TotalPriceProvider } from "./component/context/TotalPriceContext.jsx";
 
 const root = document.getElementById("root");
 
@@ -41,7 +42,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <Provider store={store}>
       <DarkModeContextProvider>
-        <RouterProvider router={router} ></RouterProvider>
+        <TotalPriceProvider>
+          <RouterProvider router={router} ></RouterProvider>
+        </TotalPriceProvider>
       </DarkModeContextProvider>
     </Provider>
   </React.StrictMode>
