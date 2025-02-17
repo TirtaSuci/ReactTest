@@ -1,19 +1,22 @@
 import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
 import { useTotalPrice, useTotalPriceDispatch } from "../../context/TotalPriceContext";
 import { useExchangeRate } from "../../context/ExchangeMoney"
+import { addToCart, decreaseCart } from "../../../redux/slice/cartSlice";
+import DecreaseButton from "../button/DecreaseButton";
 
 const TabelCart = (props) => {
-    const { products } = props;
+    const { products, id } = props;
+    const { isDarkMode } = useContext(DarkMode);
+    const { total } = useTotalPrice();
     const cart = useSelector((state) => state.cart.data);
     const totalPriceRef = useRef(null);
     const infoCartRef = useRef(null);
-    const { isDarkMode } = useContext(DarkMode);
     const dispatch = useTotalPriceDispatch();
-    const { total } = useTotalPrice();
     const exchangeRate = useExchangeRate();
+    const usedispatch = useDispatch();
 
     useEffect(() => {
         if (products.length > 0 && cart.length > 0) {
@@ -76,9 +79,9 @@ const TabelCart = (props) => {
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
                                             <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border border-gray-300 flex justify-center items-center ">
-                                                <button className="w-7"> - </button>
+                                                <button onClick={() => usedispatch(addToCart({ id, qty: 1 }))} className="w-7"> - </button>
                                                 <span className="px-5">{item.qty}</span>
-                                                <button className="w-7"> + </button>
+                                                <button onClick={() => usedispatch(decreaseCart({ id, qty: 1 }))} className="w-7"> + </button>
                                             </div>
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
@@ -89,9 +92,7 @@ const TabelCart = (props) => {
                                                 maximumFractionDigits: 0,
                                             })}
                                         </div>
-                                        <div className="w-50 flex justify-center items-center">
-                                            <button className="border bg-blue-600 text-white p-2 px-5 rounded-lg">Hapus</button>
-                                        </div>
+                                        <DecreaseButton></DecreaseButton>
                                     </div>
                                 ) : null;
                             })}
