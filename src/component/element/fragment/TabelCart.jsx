@@ -8,7 +8,7 @@ import { addToCart, decreaseCart, removeFromCart } from "../../../redux/slice/ca
 import RemoveProductButton from "../button/RemoveProductButton";
 
 const TabelCart = (props) => {
-    const { products, id} = props;
+    const { products, id } = props;
     const { isDarkMode } = useContext(DarkMode);
     const { total } = useTotalPrice();
     const cart = useSelector((state) => state.cart.data);
@@ -46,7 +46,7 @@ const TabelCart = (props) => {
 
 
     return (
-        <div className="flex w-full justify-center">
+        <div className="flex justify-center items-center">
             <div ref={infoCartRef} >
                 <h1>Anda Belum Menambakan Produk Apapun</h1>
             </div>
@@ -79,7 +79,7 @@ const TabelCart = (props) => {
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
                                             <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border border-gray-300 flex justify-center items-center ">
-                                            <button onClick={() => usedispatch(decreaseCart({ id: item.id, qty: 1 }))} className="w-7"> - </button>
+                                                <button onClick={() => usedispatch(decreaseCart({ id: item.id, qty: 1 }))} className="w-7"> - </button>
                                                 <span className="px-5">{item.qty}</span>
                                                 <button onClick={() => usedispatch(addToCart({ id: item.id, qty: 1 }))} className="w-7"> + </button>
                                             </div>
@@ -92,23 +92,10 @@ const TabelCart = (props) => {
                                                 maximumFractionDigits: 0,
                                             })}
                                         </div>
-                                        <RemoveProductButton className="bg-blue-600 text-white" onClick={() => usedispatch(removeFromCart({ id: item.id}))}>Hapus</RemoveProductButton>
+                                        <RemoveProductButton className="bg-blue-600 text-white" onClick={() => usedispatch(removeFromCart({ id: item.id }))}>Hapus</RemoveProductButton>
                                     </div>
                                 ) : null;
                             })}
-                        {/* <div>
-                            <div colSpan={3}><b>Total Price</b></div>
-                            <div>
-                                <b>
-                                    {(total * exchangeRate).toLocaleString("id-ID", {
-                                        style: "currency",
-                                        currency: "IDR",
-                                        minimumFractionDigits: 0,
-                                        maximumFractionDigits: 0,
-                                    })}
-                                </b>
-                            </div>
-                        </div> */}
                     </div>
                 </div>
             </div>

@@ -3,13 +3,15 @@ import { createSlice, configureStore } from "@reduxjs/toolkit";
 const cartSlice = createSlice({
     name: "cart",
     initialState: {
-        data: JSON.parse(localStorage.getItem("cart")) || [], // Ambil dari localStorage saat awal
+        data: JSON.parse(localStorage.getItem("cart")) || [],
     },
     reducers: {
         addToCart: (state, action) => {
             const itemInCart = state.data.find((item) => item.id === action.payload.id);
             if (itemInCart) {
                 itemInCart.qty += 1;
+            } else {
+                state.data.push(action.payload)
             }
             localStorage.setItem("cart", JSON.stringify(state.data));
         },
@@ -17,10 +19,10 @@ const cartSlice = createSlice({
             const itemInCart = state.data.find((item) => item.id === action.payload.id);
             if (itemInCart) {
                 if (itemInCart.qty > 1) {
-                    itemInCart.qty -= 1; // Kurangi qty jika lebih dari 1
+                    itemInCart.qty -= 1;
                 }
             }
-            localStorage.setItem("cart", JSON.stringify(state.data)); // Simpan ke localStorage
+            localStorage.setItem("cart", JSON.stringify(state.data))
         },
 
         removeFromCart: (state, action) => {

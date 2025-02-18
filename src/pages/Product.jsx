@@ -1,25 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 import CardProduct from "../component/element/fragment/CardProduct";
 import { getProducts } from "../services/products.service";
-import TabelCart from "../component/element/fragment/TabelCart";
 import Navbar from "../layout/Navbar";
 import { DarkMode } from "../component/context/DarkMode";
 import { useContext } from "react";
 
 const ProductPage = () => {
     const [products, setProducts] = useState([]);
-    const [exchangeRate, setExchangeRate] = useState();
     const { isDarkMode, setIsDarkMode } = useContext(DarkMode);
-
-    useEffect(() => {
-        fetch("https://api.exchangerate-api.com/v4/latest/USD") // Replace with a valid API
-            .then((res) => res.json())
-            .then((data) => {
-                const rate = data.rates.IDR;
-                setExchangeRate(rate);
-            })
-            .catch((error) => console.error("Error fetching exchange rate:", error));
-    }, []);
 
     useEffect(() => {
         getProducts((data) => {
@@ -40,14 +28,7 @@ const ProductPage = () => {
                         </CardProduct>
                     ))}
                 </div>
-                {/* <div className="w-1/2">
-                    <h1 className="text-3xl font-bold text-blue-600">Cart</h1>
-                    <TabelCart products={products} exchangeRate={exchangeRate}></TabelCart>
-                </div> */}
             </div>
-            {/* <div className="flex w-full justify-center">
-                <Counter></Counter>
-            </div> */}
         </Fragment>
     );
 };

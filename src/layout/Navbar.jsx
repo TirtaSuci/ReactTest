@@ -25,7 +25,7 @@ const Navbar = () => {
     return (
         <div className="flex justify-end bg-blue-500 h-20 px-10 items-center text-white">{username}
             <Button className="bg-red-400 ml-5" onClick={HandleLogOut}>Logout</Button>
-            <Button className="bg-black ml-5">{totalcart}</Button>
+            <Button link="/cartproduct" className="bg-black ml-5" onClick={() => window.location.href = "/cartproduct"}>{totalcart}</Button>
             <Button
                 className="bg-blue-600 rounded text-white ml-5"
                 onClick={() => setIsDarkMode(!isDarkMode)}
