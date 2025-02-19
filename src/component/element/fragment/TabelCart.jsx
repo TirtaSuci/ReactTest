@@ -41,7 +41,8 @@ const TabelCart = (props) => {
             setInputQty((prev) => ({ ...prev, [id]: undefined }));
         } else if (inputQty[id] !== currentQty) {
             usedispatch(addToCart({ id, qty: inputQty[id], isManual: true }));
-            setInputQty((prev) => ({ ...prev, [id]: undefined }));
+            setInputQty((prev) => ({ ...prev, [id]: undefined })); // Reset setelah update Redux
+        }
     };
 
     useEffect(() => {
