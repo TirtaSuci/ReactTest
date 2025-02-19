@@ -16,16 +16,18 @@ const TotalPrice = () => {
     }, [cart]);
 
     return (
-        <div ref={totalPriceRef} className="ml-5 h-30 w-70 p-3 border rounded-md margin-20 bg-slate-200">
+        <div ref={totalPriceRef} className="ml-5 h-30 w-70 p-3 rounded-md shadow-md margin-20 bg-white">
             <p><b>Ringkasan Belanja</b></p>
-            <div className="flex flex-between pt-5">
-                <p>Total</p>
-                <div className="pl-30 max-w-30">{(total * exchangeRate).toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                })}</div>
+            <div className="flex justify-between items-center w-full pt-5">
+                <p className="text-left">Total</p>
+                <div className="text-right min-w-[120px]">
+                    {(total * exchangeRate).toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                    })}
+                </div>
             </div>
         </div>
     );

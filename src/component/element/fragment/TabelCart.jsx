@@ -64,8 +64,8 @@ const TabelCart = (props) => {
                                 const product = products.find((Product) => Product.id === item.id);
                                 const productExchange = product.price * exchangeRate;
                                 return product ? (
-                                    <div key={item.id} className="border w-5xl mb-2 flex justify-center items-center text-s tracking-tight">
-                                        <div className="w-20 h-20 border border-gray-300 flex- items-center justify-center m-3">
+                                    <div key={item.id} className="bg-white rounded-md shadow-md pl-1 pr-5 py-2 mb-2 flex justify-center items-center text-s tracking-tight">
+                                        <div className="w-20 h-20 flex- items-center justify-center m-3">
                                             <img className="w-full h-full object-contain" src={product.image} alt={product.title} />
                                         </div>
                                         <div className="w-40 overflow-hidden text-ellipsis whitespace-normal" style={{
@@ -84,9 +84,28 @@ const TabelCart = (props) => {
                                             })}
                                         </div>
                                         <div className="w-50 flex justify-center items-center">
-                                            <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border border-gray-300 flex justify-center items-center ">
+                                            <div className="grid grid-cols-[auto_3rem_auto] divide-gray-300 divide-x border-2 border-gray-300 rounded">
                                                 <button onClick={() => usedispatch(decreaseCart({ id: item.id, qty: 1 }))} className="w-7"> - </button>
-                                                <span className="px-5">{item.qty}</span>
+                                                <input
+                                                    type="number"
+                                                    className="w-12 text-center"
+                                                    value={item.qty}
+                                                    onChange={(e) => {
+                                                        let newQty = e.target.value.replace(/^0+(?=\d)/, "");
+                                                        newQty = Number(newQty);
+
+                                                        if (isNaN(newQty) || newQty < 0) newQty = 0;
+
+                                                        usedispatch(addToCart({ id: item.id, qty: newQty, isManual: true }));
+                                                    }}
+                                                    onBlur={(e) => {
+                                                        if (e.target.value === "") {
+                                                            usedispatch(addToCart({ id: item.id, qty: 1, isManual: true }));
+                                                        }
+                                                    }}
+                                                />
+
+                                                {/* <span className="flex justify-center items-center">{item.qty}</span> */}
                                                 <button onClick={() => usedispatch(addToCart({ id: item.id, qty: 1 }))} className="w-7"> + </button>
                                             </div>
                                         </div>

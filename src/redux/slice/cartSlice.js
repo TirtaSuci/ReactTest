@@ -7,13 +7,17 @@ const cartSlice = createSlice({
     },
     reducers: {
         addToCart: (state, action) => {
-            const itemInCart = state.data.find((item) => item.id === action.payload.id);
+            const { id, qty, isManual } = action.payload;
+            const itemInCart = state.data.find((item) => item.id === id);
             if (itemInCart) {
-                itemInCart.qty += 1;
+                if (isManual) {
+                    itemInCart.qty = qty;
+                } else {
+                    itemInCart.qty += qty;
+                }
             } else {
-                state.data.push(action.payload)
+                state.data.push({ ...action.payload });
             }
-            localStorage.setItem("cart", JSON.stringify(state.data));
         },
         decreaseCart: (state, action) => {
             const itemInCart = state.data.find((item) => item.id === action.payload.id);
