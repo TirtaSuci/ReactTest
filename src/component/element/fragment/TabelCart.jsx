@@ -2,16 +2,9 @@ import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
-import {
-    useTotalPrice,
-    useTotalPriceDispatch,
-} from "../../context/TotalPriceContext";
+import { useTotalPrice, useTotalPriceDispatch, } from "../../context/TotalPriceContext";
 import { useExchangeRate } from "../../context/ExchangeMoney";
-import {
-    addToCart,
-    decreaseCart,
-    removeFromCart,
-} from "../../../redux/slice/cartSlice";
+import { addToCart, decreaseCart, removeFromCart, } from "../../../redux/slice/cartSlice";
 import RemoveProductButton from "../button/RemoveProductButton";
 import Button from "../button";
 
