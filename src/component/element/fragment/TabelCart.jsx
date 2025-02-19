@@ -6,16 +6,17 @@ import { useTotalPrice, useTotalPriceDispatch } from "../../context/TotalPriceCo
 import { useExchangeRate } from "../../context/ExchangeMoney"
 import { addToCart, decreaseCart, removeFromCart } from "../../../redux/slice/cartSlice";
 import RemoveProductButton from "../button/RemoveProductButton";
+import Button from "../button";
 
 const TabelCart = (props) => {
     const { products, id } = props;
     const { isDarkMode } = useContext(DarkMode);
     const { total } = useTotalPrice();
     const cart = useSelector((state) => state.cart.data);
-    const totalPriceRef = useRef(null);
     const infoCartRef = useRef(null);
     const dispatch = useTotalPriceDispatch();
     const exchangeRate = useExchangeRate();
+    const totalPriceRef = useRef(null);
     const usedispatch = useDispatch();
 
     useEffect(() => {
@@ -44,11 +45,16 @@ const TabelCart = (props) => {
         }
     }, [cart]);
 
-
     return (
         <div className="flex justify-center items-center">
-            <div ref={infoCartRef} >
-                <h1>Anda Belum Menambakan Produk Apapun</h1>
+            <div className="flex flex-col justify-center items-center pt-85" ref={infoCartRef}>
+                <h1 className="text-xl text-slate-500">Anda Belum Menambahkan Produk Apapun</h1>
+                <Button
+                    className="bg-blue-600 text-white mt-4 px-4 py-2 rounded-md"
+                    onClick={() => window.location.href = "/products"}
+                >
+                    Kembali Ke Produk
+                </Button>
             </div>
             <div ref={totalPriceRef} >
                 <div className={` ${isDarkMode && "text-white"}`}>

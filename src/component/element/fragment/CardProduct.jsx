@@ -6,11 +6,14 @@ import { useContext } from "react";
 import { DarkMode } from "../../context/DarkMode";
 import { addToCart } from "../../../redux/slice/cartSlice";
 import { useExchangeRate } from "../../context/ExchangeMoney";
+import { usePopup } from "../../context/PopUp";
+
+
 
 const CardProduct = (props) => {
     const { children, bgColor } = props;
     return (
-        <div className={`w-full max-w-xs ${bgColor} border border-gray-300 rounded-xl m-2 flex flex-col justify-between`}>
+        <div className={`w-full max-w-xs h-full ${bgColor} border border-gray-300 rounded-xl m-2 flex flex-col justify-between`}>
             {children}
         </div>
     );
@@ -24,7 +27,7 @@ const Header = (props) => {
                 <img
                     src={Image}
                     alt="Product"
-                    className="bg-auto h-50"
+                    className="bg-auto h-50 rounded-md"
                 />
             </Link>
         </div>
@@ -35,10 +38,18 @@ const Body = (props) => {
     const { ProductName, children } = props;
     const { isDarkMode } = useContext(DarkMode);
     return (
-        <div className="px-3 text-gray-700 pb-3 pt-3 h-full">
+        <div className="px-3 text-gray-700 pb-3 pt-3 h-35">
             <a href="">
-                <h1 className={`font-semibold text-xl tracking-tight ${isDarkMode && "text-white"}`}>{ProductName.substring(0, 20)}...</h1>
-                <p className={`tracking-tighter text-s ${isDarkMode && "text-white"}`}>{children.substring(0, 100)}...</p>
+                <p className={`font-semibold text-lg tracking-tight overflow-hidden text-ellipsis whitespace-normal ${isDarkMode && "text-white"}`} style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 1,
+                    WebkitBoxOrient: "vertical"
+                }}>{ProductName}</p>
+                <p className={`tracking-tighter text-s overflow-hidden text-ellipsis whitespace-normal ${isDarkMode && "text-white"}`} style={{
+                    display: "-webkit-box",
+                    WebkitLineClamp: 3,
+                    WebkitBoxOrient: "vertical"
+                }}>{children}</p>
             </a>
         </div>
     );
@@ -46,10 +57,10 @@ const Body = (props) => {
 
 const Footer = (props) => {
     const { Price, id } = props;
-    const [convertedPrice, setConvertedPrice] = useState(Price);
     const usedispatch = useDispatch();
     const { isDarkMode } = useContext(DarkMode);
     const exchangeRate = useExchangeRate();
+    const { showPopup } = usePopup();
 
     return (
         <div className="flex items-center justify-between px-3 pb-5">
@@ -59,7 +70,10 @@ const Footer = (props) => {
                     maximumFractionDigits: 0
                 })}
             </span>
-            <Button className={`bg-blue-600 text-white`} onClick={() => usedispatch(addToCart({ id, qty: 1 }))} >Add to Cart</Button>
+            <Button className={`bg-blue-600 text-white`} onClick={() => {
+                usedispatch(addToCart({ id: id, qty: 1 }));
+                showPopup();
+            }} >Add to Cart</Button>
         </div>
     );
 };

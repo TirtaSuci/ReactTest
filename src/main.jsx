@@ -15,6 +15,7 @@ import DarkModeContextProvider from "./component/context/DarkMode.jsx";
 import { TotalPriceProvider } from "./component/context/TotalPriceContext.jsx";
 import CartProductPage from "./pages/CartProduct.jsx";
 import { ExchangeRateProvider } from "./component/context/ExchangeMoney.jsx";
+import { PopupProvider } from "./component/context/PopUp.jsx";
 
 const root = document.getElementById("root");
 
@@ -48,7 +49,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <DarkModeContextProvider>
         <ExchangeRateProvider>
           <TotalPriceProvider>
-            <RouterProvider router={router} ></RouterProvider>
+            <PopupProvider>
+              <RouterProvider router={router} ></RouterProvider>
+            </PopupProvider>
           </TotalPriceProvider>
         </ExchangeRateProvider>
       </DarkModeContextProvider>
