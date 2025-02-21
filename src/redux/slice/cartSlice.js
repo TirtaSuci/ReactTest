@@ -13,11 +13,12 @@ const cartSlice = createSlice({
                 if (isManual) {
                     itemInCart.qty = qty;
                 } else {
-                    itemInCart.qty += qty;
+                    itemInCart.qty += 1;
                 }
             } else {
-                state.data.push({ ...action.payload });
+                state.data.push(action.payload);
             }
+            localStorage.setItem("cart", JSON.stringify(state.data));
         },
         decreaseCart: (state, action) => {
             const itemInCart = state.data.find((item) => item.id === action.payload.id);

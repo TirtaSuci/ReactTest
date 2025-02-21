@@ -70,10 +70,17 @@ const Footer = (props) => {
                     maximumFractionDigits: 0
                 })}
             </span>
-            <Button className={`bg-blue-600 text-white`} onClick={() => {
-                usedispatch(addToCart({ id: id, qty: 1 }));
-                showPopup();
-            }} >Add to Cart</Button>
+            <Button
+                type="button" // pastikan type di-set ke "button"
+                className="bg-blue-600 text-white"
+                onClick={() => {
+                    usedispatch(addToCart({ id, qty: 1 }));
+                    showPopup();
+                }}
+            >
+                Add to Cart
+            </Button>
+
         </div>
     );
 };
