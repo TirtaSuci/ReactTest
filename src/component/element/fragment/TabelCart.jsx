@@ -7,6 +7,7 @@ import { useExchangeRate } from "../../context/ExchangeMoney";
 import { addToCart, decreaseCart, removeFromCart, } from "../../../redux/slice/cartSlice";
 import RemoveProductButton from "../button/RemoveProductButton";
 import Button from "../button";
+import { Link } from "react-router-dom";
 
 const TabelCart = (props) => {
     const { products } = props;
@@ -25,7 +26,7 @@ const TabelCart = (props) => {
     const handleQtyChange = (e, id) => {
         let newQty = e.target.value.replace(/^0+(?=\d)/, "");
         newQty = newQty === "" ? "" : Number(newQty);
-
+        if (isNaN(newQty) || newQty < 0) newQty = 1;
         setInputQty((prev) => ({ ...prev, [id]: newQty }));
     };
 
@@ -35,6 +36,17 @@ const TabelCart = (props) => {
         } else if (inputQty[id] !== currentQty) {
             usedispatch(addToCart({ id, qty: inputQty[id], isManual: true }));
             setInputQty((prev) => ({ ...prev, [id]: undefined })); // Reset setelah update Redux
+        }
+    };
+
+    const handleQtyKeyDown = (e, id, currentQty) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            if (inputQty[id] !== "" && inputQty[id] !== undefined && inputQty[id] !== currentQty) {
+                usedispatch(addToCart({ id, qty: Number(inputQty[id]), isManual: true }));
+            }
+            setInputQty((prev) => ({ ...prev, [id]: undefined }));
+            setFocusedInputId(null);
         }
     };
 
@@ -89,13 +101,13 @@ const TabelCart = (props) => {
                                     key={item.id}
                                     className="bg-white rounded-md shadow-md pl-1 pr-5 py-2 mb-2 flex justify-center items-center"
                                 >
-                                    <div className="w-20 h-20 flex items-center justify-center m-3">
+                                    <Link to={`/product/${item.id}`} className="w-20 h-20 flex items-center justify-center m-3">
                                         <img
                                             className="w-full h-full object-contain"
                                             src={product.image}
                                             alt={product.title}
                                         />
-                                    </div>
+                                    </Link>
                                     <div className="w-40 overflow-hidden text-ellipsis whitespace-normal">
                                         {product.title}
                                     </div>
@@ -131,6 +143,7 @@ const TabelCart = (props) => {
                                                     handleQtyBlur(item.id);
                                                     setFocusedInputId(null); // Hilangkan fokus saat keluar dari input
                                                 }}
+                                                onKeyDown={(e) => handleQtyKeyDown(e, item.id, item.qty)}
                                                 onFocus={() => setFocusedInputId(item.id)} // Tandai input yang aktif
                                             />
                                             <button
