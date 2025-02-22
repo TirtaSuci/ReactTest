@@ -21,13 +21,18 @@ const DetailProductPage = () => {
             setProduct(data);
         });
     }, [id]);
-    console.log(product);
+
+    const handleBuyNow = () => {
+        usedispatch(addToCart({ id: Number(id), qty: 1 }));
+        window.location.href = "/cartproduct";
+    };
+
     return (
         <div>
             <Navbar />
             <div className="pt-30 justify-center flex flex-col items-center">
                 <div className="flex w-1/2 items-center justify-center">
-                    <img className="pr-10 min-h-50 min-w-80" src={product.image} alt={product.title} />
+                    <img className="pr-10 max-h-100 max-w-100 " src={product.image} alt={product.title} />
                     <div className="pl-10 pt-10">
                         <div className="font-bold text-2xl">{product.title}</div>
                         <div className="py-5 font-bold text-5xl">{(product.price * exchangeRate).toLocaleString("id-ID", {
@@ -36,9 +41,7 @@ const DetailProductPage = () => {
                         <div className="font-bold pb-2">Rating: {product.rating ? `${product.rating.rate}/5 (${product.rating.count})` : "No rating available"}</div>
                         <div className="text-l pb-10 w-5/6">{product.description}</div>
                         <div className="flex">
-                            <Button link="/cartproduct" className="bg-blue-600 text-white w-35" onClick={() => {
-                                usedispatch(addToCart({ id: Number(id), qty: 1 }))
-                            }}>Buy Now</Button>
+                            <Button link="/cartproduct" className="bg-blue-600 text-white w-35" onClick={handleBuyNow}>Buy Now</Button>
                             <Button className={`ml-10 border bg-white text-blue-600 w-35`} onClick={() => {
                                 usedispatch(addToCart({ id: Number(id), qty: 1 }));
                                 showPopup();

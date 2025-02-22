@@ -141,10 +141,10 @@ const TabelCart = (props) => {
                                                 onChange={(e) => handleQtyChange(e, item.id)}
                                                 onBlur={() => {
                                                     handleQtyBlur(item.id);
-                                                    setFocusedInputId(null); // Hilangkan fokus saat keluar dari input
+                                                    setFocusedInputId(null);
                                                 }}
                                                 onKeyDown={(e) => handleQtyKeyDown(e, item.id, item.qty)}
-                                                onFocus={() => setFocusedInputId(item.id)} // Tandai input yang aktif
+                                                onFocus={() => setFocusedInputId(item.id)}
                                             />
                                             <button
                                                 onClick={() =>
