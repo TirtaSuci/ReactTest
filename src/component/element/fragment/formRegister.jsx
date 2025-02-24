@@ -33,7 +33,7 @@ const FormRegister = () => {
         type="password"
         placeholder="******"
       ></Index>
-      <Button bgcolor="bg-red-400 w-full" onClick={() => { HandleRegister(); }}>Register Now</Button>
+      <Button className="bg-red-400 w-full text-white" onClick={() => { HandleRegister(); }}>Register Now</Button>
     </form>
   );
 };

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { DarkMode } from "../../context/DarkMode";
-import { useTotalPrice, useTotalPriceDispatch, } from "../../context/TotalPriceContext";
+import { useTotalPriceDispatch, } from "../../context/TotalPriceContext";
 import { useExchangeRate } from "../../context/ExchangeMoney";
 import { addToCart, decreaseCart, removeFromCart, } from "../../../redux/slice/cartSlice";
 import RemoveProductButton from "../button/RemoveProductButton";
@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 const TabelCart = (props) => {
     const { products } = props;
     const { isDarkMode } = useContext(DarkMode);
-    const { total } = useTotalPrice();
     const cart = useSelector((state) => state.cart.data);
     const dispatch = useTotalPriceDispatch();
     const exchangeRate = useExchangeRate();
@@ -76,7 +75,7 @@ const TabelCart = (props) => {
 
     return (
         <div className="flex justify-center items-center">
-            <div
+            {/* <div
                 className="flex flex-col justify-center items-center pt-85"
                 ref={infoCartRef}
             >
@@ -89,7 +88,7 @@ const TabelCart = (props) => {
                 >
                     Kembali Ke Produk
                 </Button>
-            </div>
+            </div> */}
             <div ref={totalPriceRef}>
                 <div className={`${isDarkMode ? "text-white" : ""}`}>
                     {products.length > 0 &&

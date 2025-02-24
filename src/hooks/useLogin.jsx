@@ -7,7 +7,9 @@ export const useLogin = () => {
         const token = localStorage.getItem("token");
         if (token) {
             setUsername(getUsername(token));
-        } else window.location.href = "/login";
+        } else
+            window.location.href = "/login";
+        // setUsername("Guest");
     }, []);
     return username;
-};
+}; 

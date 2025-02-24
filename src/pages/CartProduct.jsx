@@ -4,6 +4,7 @@ import { useExchangeRate } from "../component/context/ExchangeMoney";
 import { getProducts } from "../services/products.service";
 import TotalPrice from "../component/element/fragment/TotalPrice";
 import Navbar from "../layout/Navbar";
+import TabelCartDetail from "../component/element/fragment/TabelCartDetail";
 
 const CartProductPage = () => {
     const [products, setProducts] = useState([]);
@@ -20,6 +21,7 @@ const CartProductPage = () => {
             <Navbar />
             <div className="flex justify-center pt-5">
                 <TabelCart products={products} exchangeRate={exchangeRate}></TabelCart>
+                <TabelCartDetail></TabelCartDetail>
                 <TotalPrice></TotalPrice>
             </div>
 
