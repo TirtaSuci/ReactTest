@@ -8,8 +8,8 @@ export const useLogin = () => {
         if (token) {
             setUsername(getUsername(token));
         } else
-            window.location.href = "/login";
-        // setUsername("Guest");
+            // window.location.href = "/login";
+        setUsername("Guest");
     }, []);
     return username;
 }; 

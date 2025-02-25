@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useExchangeRate } from "../../context/ExchangeMoney";
 import { useTotalPrice } from "../../context/TotalPriceContext";
 import { useSelector } from "react-redux";
+import Button from "../button";
 
 const TotalPrice = () => {
     const { total } = useTotalPrice();
@@ -13,10 +14,19 @@ const TotalPrice = () => {
         if (totalPriceRef.current) {
             totalPriceRef.current.style.display = cart.length > 0 ? "" : "none";
         }
-    }, [cart]);
+    }, []);
+
+    const CheckOut = () => {
+        const token = localStorage.getItem("token");
+        if (token) {
+            window.location.href = "/products";
+        } else {
+            window.location.href = "/login";
+        };
+    }
 
     return (
-        <div ref={totalPriceRef} className="ml-5 h-30 w-70 p-3 rounded-md shadow-md margin-20 bg-white">
+        <div ref={totalPriceRef} className="ml-5 w-80 p-3 max-h-[160px] rounded-md shadow-md margin-20 bg-white flex flex-col justify-between">
             <p><b>Ringkasan Belanja</b></p>
             <div className="flex justify-between items-center w-full pt-5">
                 <p className="text-left">Total</p>
@@ -29,6 +39,8 @@ const TotalPrice = () => {
                     })}
                 </div>
             </div>
+
+            <Button className="bg-blue-600 text-white mt-4 px-4 py-2 rounded-md w-full " onClick={CheckOut}>Checkout</Button>
         </div>
     );
 }

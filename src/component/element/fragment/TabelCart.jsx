@@ -74,21 +74,7 @@ const TabelCart = (props) => {
     }, [cart]);
 
     return (
-        <div className="flex justify-center items-center">
-            {/* <div
-                className="flex flex-col justify-center items-center pt-85"
-                ref={infoCartRef}
-            >
-                <h1 className="text-xl text-slate-500">
-                    Anda Belum Menambahkan Produk Apapun
-                </h1>
-                <Button
-                    className="bg-blue-600 text-white mt-4 px-4 py-2 rounded-md"
-                    onClick={() => (window.location.href = "/products")}
-                >
-                    Kembali Ke Produk
-                </Button>
-            </div> */}
+        <div className="flex justify-center">
             <div ref={totalPriceRef}>
                 <div className={`${isDarkMode ? "text-white" : ""}`}>
                     {products.length > 0 &&
@@ -107,10 +93,14 @@ const TabelCart = (props) => {
                                             alt={product.title}
                                         />
                                     </Link>
-                                    <div className="w-40 overflow-hidden text-ellipsis whitespace-normal">
+                                    <div className="w-60 overflow-hidden text-ellipsis whitespace-normal" style={{
+                                        display: "-webkit-box",
+                                        WebkitLineClamp: 2,
+                                        WebkitBoxOrient: "vertical"
+                                    }}>
                                         {product.title}
                                     </div>
-                                    <div className="w-50 flex justify-center items-center">
+                                    <div className="w-50 pr-10 flex justify-end text-right">
                                         {productExchange.toLocaleString("id-ID", {
                                             style: "currency",
                                             currency: "IDR",

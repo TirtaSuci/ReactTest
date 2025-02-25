@@ -17,7 +17,7 @@ const CartProductPage = () => {
     }, []);
 
     return (
-        <div className="bg-gray-200 h-screen">
+        <div className="bg-gray-200">
             <Navbar />
             <div className="flex justify-center pt-5">
                 <TabelCart products={products} exchangeRate={exchangeRate}></TabelCart>
