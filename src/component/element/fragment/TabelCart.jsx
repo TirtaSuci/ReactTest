@@ -101,12 +101,14 @@ const TabelCart = (props) => {
                                         {product.title}
                                     </div>
                                     <div className="w-50 pr-10 flex justify-end text-right">
-                                        {productExchange.toLocaleString("id-ID", {
-                                            style: "currency",
-                                            currency: "IDR",
-                                            minimumFractionDigits: 0,
-                                            maximumFractionDigits: 0,
-                                        })}
+                                        <b>
+                                            {productExchange.toLocaleString("id-ID", {
+                                                style: "currency",
+                                                currency: "IDR",
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0,
+                                            })}
+                                        </b>
                                     </div>
                                     <div className="w-50 flex justify-center items-center">
                                         <div
@@ -146,12 +148,14 @@ const TabelCart = (props) => {
                                         </div>
                                     </div>
                                     <div className="w-50 flex justify-center items-center">
-                                        {(productExchange * item.qty).toLocaleString("id-ID", {
-                                            style: "currency",
-                                            currency: "IDR",
-                                            minimumFractionDigits: 0,
-                                            maximumFractionDigits: 0,
-                                        })}
+                                        <b>
+                                            {(productExchange * item.qty).toLocaleString("id-ID", {
+                                                style: "currency",
+                                                currency: "IDR",
+                                                minimumFractionDigits: 0,
+                                                maximumFractionDigits: 0,
+                                            })}
+                                        </b>
                                     </div>
                                     <RemoveProductButton
                                         className="bg-blue-600 text-white"

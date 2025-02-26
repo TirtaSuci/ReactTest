@@ -31,12 +31,14 @@ const TotalPrice = () => {
             <div className="flex justify-between items-center w-full pt-5">
                 <p className="text-left">Total</p>
                 <div className="text-right min-w-[120px]">
-                    {(total * exchangeRate).toLocaleString("id-ID", {
-                        style: "currency",
-                        currency: "IDR",
-                        minimumFractionDigits: 0,
-                        maximumFractionDigits: 0,
-                    })}
+                    <b>
+                        {(total * exchangeRate).toLocaleString("id-ID", {
+                            style: "currency",
+                            currency: "IDR",
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0,
+                        })}
+                    </b>
                 </div>
             </div>
 
