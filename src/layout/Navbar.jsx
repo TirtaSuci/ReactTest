@@ -27,10 +27,10 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex justify-between bg-blue-500 h-20 px-10 items-center text-white">
-            <Link to="/products" className="text-left">Home</Link>
+        <div className="flex justify-between bg-indigo-500 h-20 px-10 items-center text-white">
+            <Link to="/products" className="text-left"><b>E-Commerce</b></Link>
             <div className="text-right">
-                {username}
+                <b>{username}</b>
                 {token ? (
                     <Button className="bg-red-400 ml-5" onClick={HandleLogOut}>
                         LogOut

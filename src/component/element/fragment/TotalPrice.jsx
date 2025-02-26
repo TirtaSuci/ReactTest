@@ -26,7 +26,10 @@ const TotalPrice = () => {
     }
 
     return (
-        <div ref={totalPriceRef} className="ml-5 w-80 p-3 max-h-[160px] rounded-md shadow-md margin-20 bg-white flex flex-col justify-between">
+        <div
+            ref={totalPriceRef}
+            className="ml-5 w-80 p-3 max-h-[160px] rounded-md shadow-md bg-white flex flex-col justify-between sticky top-5"
+        >
             <p><b>Ringkasan Belanja</b></p>
             <div className="flex justify-between items-center w-full pt-5">
                 <p className="text-left">Total</p>

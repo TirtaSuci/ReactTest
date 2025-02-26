@@ -84,7 +84,7 @@ const TabelCart = (props) => {
                             return product ? (
                                 <div
                                     key={item.id}
-                                    className="bg-white rounded-md shadow-md pl-1 pr-5 py-2 mb-2 flex justify-center items-center"
+                                    className="bg-white rounded-md shadow-md pl-1 pr-5 py-2 mb-3 flex justify-center items-center"
                                 >
                                     <Link to={`/product/${item.id}`} className="w-20 h-20 flex items-center justify-center m-3">
                                         <img
