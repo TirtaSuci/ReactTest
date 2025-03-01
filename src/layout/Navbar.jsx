@@ -27,7 +27,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className="flex justify-between bg-indigo-500 h-20 px-10 items-center text-white">
+        <div className="flex justify-between bg-indigo-500 h-20 px-10 items-center text-white sticky top-0">
             <Link to="/products" className="text-left"><b>E-Commerce</b></Link>
             <div className="text-right">
                 <b>{username}</b>

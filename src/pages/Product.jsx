@@ -19,7 +19,7 @@ const ProductPage = () => {
         <Fragment>
             <Navbar />
             <div className={`${isDarkMode && "bg-slate-800"}`}>
-                <div className="min-w-screen flex flex-wrap justify-center items-center">
+                <div className="max-w-screen flex flex-wrap justify-center items-center">
                     {products.length > 0 && products.map((Product) => (
                         <CardProduct bgColor={Product.bgColor} key={Product.id}>
                             <CardProduct.Header Image={Product.image} id={Product.id}></CardProduct.Header>

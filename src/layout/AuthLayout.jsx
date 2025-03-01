@@ -13,13 +13,14 @@ const AuthLayout = (props) => {
     >
       <div className="w-full max-w-xs">
         <button
-          className="bg-blue-600 rounded text-white p-2 absolute top-5 right-5"
+          className="w-25 bg-blue-600 rounded text-white p-2 absolute top-5 right-5"
           onClick={() => setIsDarkMode(!isDarkMode)}
         >
           {isDarkMode ? "Dark" : "Light"}
         </button>
         <h1 className="text-3xl font-bold mb-2 text-blue-400">{Text}</h1>
-        <p className="font-medium text-slate-500 mb-3">
+        <p className={`font-medium mb-3 ${isDarkMode ? "text-slate-300" : "text-slate-500"
+          }`}>
           Wellcome, please enter your identity
         </p>
         {children}
